@@ -21,5 +21,23 @@
       "title": "必应",
       "url": "https://www.bing.com/search?q=%s"
     }
+  ],
+
+  "page_contexts": [
+    {
+      "id": "page-1",
+      "title": "当前链接生成二维码[蜗牛范]",
+      "url": "https://api.woniufun.com/QRCode/?level=1&size=5&margin=4&data=%s"
+    },
+    {
+      "id": "page-archive",
+      "title": "查看网页快照",
+      "url": "https://web.archive.org/web/*/%s"
+    },
+    {
+      "id": "page-similar",
+      "title": "相似网页",
+      "url": "https://www.google.com/search?q=related:%s"
+    }
   ]
 }

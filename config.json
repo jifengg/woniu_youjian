@@ -58,5 +58,23 @@
       "title": "查找相似链接",
       "url": "https://www.google.com/search?q=related:%s"
     }
+  ],
+
+  "image_contexts": [
+    {
+      "id": "image-qrcode",
+      "title": "图片链接生成二维码",
+      "url": "https://api.woniufun.com/QRCode/?level=1&size=5&margin=4&data=%s"
+    },
+    {
+      "id": "image-search",
+      "title": "Google搜索相似图片",
+      "url": "https://lens.google.com/uploadbyurl?url=%s"
+    },
+    {
+      "id": "image-decode",
+      "title": "解析图片中的二维码",
+      "url": "https://zxing.org/w/decode?u=%s"
+    }
   ]
 }

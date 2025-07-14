@@ -1,5 +1,6 @@
 
 
+
 // 保存菜单配置的全局变量
 let menuConfig = null;
 
@@ -52,6 +53,26 @@ async function loadMenuConfig() {
     };
     return menuConfig;
   }
+}
+
+/**
+ * 处理URL中的占位符替换
+ * @param {string} urlTemplate - 包含占位符的URL模板
+ * @param {string} text - 要替换的文本
+ * @return {string} 替换后的URL
+ */
+function processUrl(urlTemplate, text) {
+  if (!urlTemplate || !text) {
+    return '';
+  }
+
+  // 替换 %s 为编码后的文本
+  let processedUrl = urlTemplate.replace(/%s/g, encodeURIComponent(text));
+
+  // 替换 %os 为原始文本（不编码）
+  processedUrl = processedUrl.replace(/%os/g, text);
+
+  return processedUrl;
 }
 
 // 创建上下文菜单项
@@ -137,19 +158,19 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
     case 'text':
       // 文本选择菜单，需要有选中的文本
       if (!info.selectionText) return;
-      actionUrl = menuItem.url.replace(/%s/g, encodeURIComponent(info.selectionText));
+      actionUrl = processUrl(menuItem.url, info.selectionText);
       break;
 
     case 'page':
       // 页面菜单，使用当前页面URL
       if (!tab.url) return;
-      actionUrl = menuItem.url.replace(/%s/g, encodeURIComponent(tab.url));
+      actionUrl = processUrl(menuItem.url, tab.url);
       break;
 
     case 'link':
       // 链接菜单，使用右键点击的链接URL
       if (!info.linkUrl) return;
-      actionUrl = menuItem.url.replace(/%s/g, encodeURIComponent(info.linkUrl));
+      actionUrl = processUrl(menuItem.url, info.linkUrl);
       break;
 
     default:
@@ -161,4 +182,5 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
     chrome.tabs.create({ url: actionUrl });
   }
 });
+
 

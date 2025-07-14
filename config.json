@@ -33,7 +33,7 @@
     {
       "id": "page-archive",
       "title": "查看网页快照",
-      "url": "https://web.archive.org/web/*/%s"
+      "url": "https://web.archive.org/web/*/%os"
     },
     {
       "id": "page-similar",
@@ -51,7 +51,7 @@
     {
       "id": "link-archive",
       "title": "查看链接快照",
-      "url": "https://web.archive.org/web/*/%s"
+      "url": "https://web.archive.org/web/*/%os"
     },
     {
       "id": "link-similar",

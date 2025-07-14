@@ -3,7 +3,7 @@
 // 保存菜单配置的全局变量
 let menuConfig = null;
 
-// 从配置文件加载菜单设置
+// 从配置文件加载菜单设置，并为每个菜单项添加类型标识
 async function loadMenuConfig() {
   // 如果配置已经加载过，直接返回缓存的配置
   if (menuConfig !== null) {
@@ -12,11 +12,44 @@ async function loadMenuConfig() {
 
   try {
     const response = await fetch(chrome.runtime.getURL('config.json'));
-    menuConfig = await response.json();
+    const config = await response.json();
+
+    // 为每个菜单项添加type标识
+    if (config.text_contexts && config.text_contexts.length > 0) {
+      config.text_contexts.forEach(item => {
+        item.type = 'text';
+      });
+    }
+
+    if (config.page_contexts && config.page_contexts.length > 0) {
+      config.page_contexts.forEach(item => {
+        item.type = 'page';
+      });
+    }
+
+    if (config.link_contexts && config.link_contexts.length > 0) {
+      config.link_contexts.forEach(item => {
+        item.type = 'link';
+      });
+    }
+
+    // 创建所有菜单项的汇总集合，方便后续查找
+    config.all_items = [
+      ...(config.text_contexts || []),
+      ...(config.page_contexts || []),
+      ...(config.link_contexts || [])
+    ];
+
+    menuConfig = config;
     return menuConfig;
   } catch (error) {
     console.error('加载配置文件失败:', error);
-    menuConfig = { contexts: [], page_contexts: [], link_contexts: [] };
+    menuConfig = { 
+      text_contexts: [], 
+      page_contexts: [], 
+      link_contexts: [],
+      all_items: [] 
+    };
     return menuConfig;
   }
 }
@@ -30,8 +63,8 @@ chrome.runtime.onInstalled.addListener(async () => {
   const config = await loadMenuConfig();
 
   // 创建选中文本菜单项
-  if (config.contexts && config.contexts.length > 0) {
-    config.contexts.forEach(item => {
+  if (config.text_contexts && config.text_contexts.length > 0) {
+    config.text_contexts.forEach(item => {
       chrome.contextMenus.create({
         id: item.id,
         title: item.title,
@@ -90,43 +123,42 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
   // 加载配置（从缓存中）
   const config = await loadMenuConfig();
 
-  // 处理选中文本的菜单项点击
-  if (info.selectionText && info.menuItemId.indexOf("id-") === 0) {
-    const selectedText = info.selectionText;
+  // 查找被点击的菜单项（在全部菜单项中查找）
+  const menuItem = config.all_items.find(item => item.id === info.menuItemId);
 
-    // 查找被点击的菜单项
-    const menuItem = config.contexts.find(item => item.id === info.menuItemId);
-
-    if (menuItem && menuItem.url) {
-      // 替换URL中的占位符 %s 为选中的文本
-      const searchUrl = menuItem.url.replace(/%s/g, encodeURIComponent(selectedText));
-      chrome.tabs.create({ url: searchUrl });
-    }
+  if (!menuItem || !menuItem.url) {
+    return; // 未找到菜单项或菜单项没有URL，不执行任何操作
   }
 
-  // 处理页面右键菜单项点击
-  else if (info.menuItemId.indexOf("page-") === 0) {
-    // 查找被点击的页面菜单项
-    const pageMenuItem = config.page_contexts.find(item => item.id === info.menuItemId);
+  // 根据菜单项类型执行不同的操作
+  let actionUrl = '';
 
-    if (pageMenuItem && pageMenuItem.url && tab.url) {
-      // 替换URL中的占位符 %s 为当前页面URL
-      const actionUrl = pageMenuItem.url.replace(/%s/g, encodeURIComponent(tab.url));
-      chrome.tabs.create({ url: actionUrl });
-    }
+  switch (menuItem.type) {
+    case 'text':
+      // 文本选择菜单，需要有选中的文本
+      if (!info.selectionText) return;
+      actionUrl = menuItem.url.replace(/%s/g, encodeURIComponent(info.selectionText));
+      break;
+
+    case 'page':
+      // 页面菜单，使用当前页面URL
+      if (!tab.url) return;
+      actionUrl = menuItem.url.replace(/%s/g, encodeURIComponent(tab.url));
+      break;
+
+    case 'link':
+      // 链接菜单，使用右键点击的链接URL
+      if (!info.linkUrl) return;
+      actionUrl = menuItem.url.replace(/%s/g, encodeURIComponent(info.linkUrl));
+      break;
+
+    default:
+      return; // 未知类型，不执行任何操作
   }
 
-  // 处理链接右键菜单项点击
-  else if (info.menuItemId.indexOf("link-") === 0 && info.linkUrl) {
-    // 查找被点击的链接菜单项
-    const linkMenuItem = config.link_contexts.find(item => item.id === info.menuItemId);
-
-    if (linkMenuItem && linkMenuItem.url) {
-      // 替换URL中的占位符 %s 为右键点击的链接URL
-      const actionUrl = linkMenuItem.url.replace(/%s/g, encodeURIComponent(info.linkUrl));
-      chrome.tabs.create({ url: actionUrl });
-    }
+  // 执行操作，打开新标签页
+  if (actionUrl) {
+    chrome.tabs.create({ url: actionUrl });
   }
 });
-
 

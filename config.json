@@ -1,4 +1,5 @@
 
+
 {
   "contexts": [
     {
@@ -37,6 +38,24 @@
     {
       "id": "page-similar",
       "title": "相似网页",
+      "url": "https://www.google.com/search?q=related:%s"
+    }
+  ],
+
+  "link_contexts": [
+    {
+      "id": "link-1",
+      "title": "链接生成二维码[蜗牛范]",
+      "url": "https://api.woniufun.com/QRCode/?level=1&size=5&margin=4&data=%s"
+    },
+    {
+      "id": "link-archive",
+      "title": "查看链接快照",
+      "url": "https://web.archive.org/web/*/%s"
+    },
+    {
+      "id": "link-similar",
+      "title": "查找相似链接",
       "url": "https://www.google.com/search?q=related:%s"
     }
   ]

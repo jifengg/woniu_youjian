@@ -1,4 +1,5 @@
 
+
 // 保存菜单配置的全局变量
 let menuConfig = null;
 
@@ -15,7 +16,7 @@ async function loadMenuConfig() {
     return menuConfig;
   } catch (error) {
     console.error('加载配置文件失败:', error);
-    menuConfig = { contexts: [], page_contexts: [] };
+    menuConfig = { contexts: [], page_contexts: [], link_contexts: [] };
     return menuConfig;
   }
 }
@@ -61,6 +62,27 @@ chrome.runtime.onInstalled.addListener(async () => {
   } else {
     console.warn('配置文件中没有找到有效的页面菜单项');
   }
+
+  // 创建链接右键菜单项
+  if (config.link_contexts && config.link_contexts.length > 0) {
+    // 创建链接右键菜单分隔符
+    chrome.contextMenus.create({
+      id: "link-separator",
+      type: "separator",
+      contexts: ["link"]
+    });
+
+    // 创建链接右键菜单组
+    config.link_contexts.forEach(item => {
+      chrome.contextMenus.create({
+        id: item.id,
+        title: item.title,
+        contexts: ["link"]
+      });
+    });
+  } else {
+    console.warn('配置文件中没有找到有效的链接菜单项');
+  }
 });
 
 // 处理上下文菜单点击事件
@@ -93,5 +115,18 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
       chrome.tabs.create({ url: actionUrl });
     }
   }
+
+  // 处理链接右键菜单项点击
+  else if (info.menuItemId.indexOf("link-") === 0 && info.linkUrl) {
+    // 查找被点击的链接菜单项
+    const linkMenuItem = config.link_contexts.find(item => item.id === info.menuItemId);
+
+    if (linkMenuItem && linkMenuItem.url) {
+      // 替换URL中的占位符 %s 为右键点击的链接URL
+      const actionUrl = linkMenuItem.url.replace(/%s/g, encodeURIComponent(info.linkUrl));
+      chrome.tabs.create({ url: actionUrl });
+    }
+  }
 });
+
 

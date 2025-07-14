@@ -1,61 +1,72 @@
 
 body {
   font-family: 'Microsoft YaHei', Arial, sans-serif;
-  width: 300px;
+  width: 350px;
   margin: 0;
-  padding: 16px;
+  padding: 10px;
   color: #333;
 }
 
 .container {
   display: flex;
   flex-direction: column;
+  width: 100%;
 }
 
-h1 {
-  font-size: 18px;
-  margin-top: 0;
-  color: #1a73e8;
-  text-align: center;
-}
-
-p {
-  margin-bottom: 5px;
-  font-weight: bold;
-}
-
-ol {
-  margin-top: 5px;
-  padding-left: 20px;
-}
-
-li {
-  margin-bottom: 5px;
-}
-
-.search-engines {
-  display: flex;
-  flex-direction: column;
-  margin-top: 15px;
-  border-top: 1px solid #eee;
-  padding-top: 15px;
-}
-
-.engine {
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
-  padding: 8px;
+#search-input {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ddd;
   border-radius: 4px;
-  transition: background-color 0.2s;
+  margin-bottom: 10px;
+  box-sizing: border-box;
 }
 
-.engine:hover {
+#search-input:focus {
+  outline: none;
+  border-color: #4285f4;
+  box-shadow: 0 0 0 2px rgba(66, 133, 244, 0.2);
+}
+
+.search-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 5px;
+}
+
+.search-button {
   background-color: #f5f5f5;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+  font-size: 13px;
 }
 
-.engine-icon {
-  width: 24px;
-  height: 24px;
-  margin-right: 10px;
+.search-button:hover {
+  background-color: #e8e8e8;
+}
+
+#search-input.error {
+  border-color: #ea4335;
+  animation: shake 0.5s linear;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-2px); }
+  20%, 40%, 60%, 80% { transform: translateX(2px); }
+}
+
+/* 版本信息的样式 */
+.version-info {
+  font-size: 11px;
+  color: #888;
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
 }

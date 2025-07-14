@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const manifest = chrome.runtime.getManifest();
     const versionInfo = document.createElement('div');
     versionInfo.className = 'version-info';
-    versionInfo.textContent = `v${manifest.version}`;
+    versionInfo.textContent = `${manifest.name} v${manifest.version}`;
     document.body.appendChild(versionInfo);
 
   } catch (error) {

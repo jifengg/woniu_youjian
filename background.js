@@ -1,49 +1,53 @@
 
+// 从配置文件加载菜单设置
+async function loadMenuConfig() {
+  try {
+    const response = await fetch(chrome.runtime.getURL('config.json'));
+    const config = await response.json();
+    return config;
+  } catch (error) {
+    console.error('加载配置文件失败:', error);
+    return { contexts: [] };
+  }
+}
+
 // 创建上下文菜单项
-chrome.runtime.onInstalled.addListener(() => {
-  // 百度搜索
-  chrome.contextMenus.create({
-    id: "search-baidu",
-    title: "百度",
-    contexts: ["selection"]
-  });
+chrome.runtime.onInstalled.addListener(async () => {
+  // 移除所有现有的上下文菜单项
+  chrome.contextMenus.removeAll();
 
-  // Google搜索
-  chrome.contextMenus.create({
-    id: "search-google",
-    title: "Google",
-    contexts: ["selection"]
-  });
+  // 加载配置
+  const config = await loadMenuConfig();
 
-  // 有道词典
-  chrome.contextMenus.create({
-    id: "search-youdao",
-    title: "有道词典翻译",
-    contexts: ["selection"]
-  });
+  // 创建菜单项
+  if (config.contexts && config.contexts.length > 0) {
+    config.contexts.forEach(item => {
+      chrome.contextMenus.create({
+        id: item.id,
+        title: item.title,
+        contexts: ["selection"]
+      });
+    });
+  } else {
+    console.warn('配置文件中没有找到有效的菜单项');
+  }
 });
 
 // 处理上下文菜单点击事件
-chrome.contextMenus.onClicked.addListener((info, tab) => {
+chrome.contextMenus.onClicked.addListener(async (info, tab) => {
   const selectedText = info.selectionText;
 
   if (!selectedText) return;
 
-  let searchUrl = "";
+  // 加载配置
+  const config = await loadMenuConfig();
 
-  switch (info.menuItemId) {
-    case "search-baidu":
-      searchUrl = `https://www.baidu.com/s?wd=${encodeURIComponent(selectedText)}`;
-      break;
-    case "search-google":
-      searchUrl = `https://www.google.com/search?q=${encodeURIComponent(selectedText)}`;
-      break;
-    case "search-youdao":
-      searchUrl = `https://dict.youdao.com/result?word=${encodeURIComponent(selectedText)}&lang=en`;
-      break;
-  }
+  // 查找被点击的菜单项
+  const menuItem = config.contexts.find(item => item.id === info.menuItemId);
 
-  if (searchUrl) {
+  if (menuItem && menuItem.url) {
+    // 替换URL中的占位符 %s 为选中的文本
+    const searchUrl = menuItem.url.replace(/%s/g, encodeURIComponent(selectedText));
     chrome.tabs.create({ url: searchUrl });
   }
 });

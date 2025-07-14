@@ -1,0 +1,25 @@
+
+{
+  "contexts": [
+    {
+      "id": "id-baidu",
+      "title": "百度",
+      "url": "https://www.baidu.com/s?wd=%s"
+    },
+    {
+      "id": "id-google",
+      "title": "Google",
+      "url": "https://www.google.com/search?q=%s"
+    },
+    {
+      "id": "id-youdao",
+      "title": "有道词典",
+      "url": "https://dict.youdao.com/result?word=%s&lang=en"
+    },
+    {
+      "id": "id-bing",
+      "title": "必应",
+      "url": "https://www.bing.com/search?q=%s"
+    }
+  ]
+}

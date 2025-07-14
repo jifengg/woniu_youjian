@@ -1,13 +1,22 @@
 
+// 保存菜单配置的全局变量
+let menuConfig = null;
+
 // 从配置文件加载菜单设置
 async function loadMenuConfig() {
+  // 如果配置已经加载过，直接返回缓存的配置
+  if (menuConfig !== null) {
+    return menuConfig;
+  }
+
   try {
     const response = await fetch(chrome.runtime.getURL('config.json'));
-    const config = await response.json();
-    return config;
+    menuConfig = await response.json();
+    return menuConfig;
   } catch (error) {
     console.error('加载配置文件失败:', error);
-    return { contexts: [] };
+    menuConfig = { contexts: [] };
+    return menuConfig;
   }
 }
 
@@ -39,7 +48,7 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
 
   if (!selectedText) return;
 
-  // 加载配置
+  // 获取配置（从缓存中）
   const config = await loadMenuConfig();
 
   // 查找被点击的菜单项

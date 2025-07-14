@@ -1,0 +1,61 @@
+
+body {
+  font-family: 'Microsoft YaHei', Arial, sans-serif;
+  width: 300px;
+  margin: 0;
+  padding: 16px;
+  color: #333;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+h1 {
+  font-size: 18px;
+  margin-top: 0;
+  color: #1a73e8;
+  text-align: center;
+}
+
+p {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+ol {
+  margin-top: 5px;
+  padding-left: 20px;
+}
+
+li {
+  margin-bottom: 5px;
+}
+
+.search-engines {
+  display: flex;
+  flex-direction: column;
+  margin-top: 15px;
+  border-top: 1px solid #eee;
+  padding-top: 15px;
+}
+
+.engine {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  padding: 8px;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.engine:hover {
+  background-color: #f5f5f5;
+}
+
+.engine-icon {
+  width: 24px;
+  height: 24px;
+  margin-right: 10px;
+}

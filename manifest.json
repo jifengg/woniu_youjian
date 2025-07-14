@@ -1,0 +1,25 @@
+{
+  "name": "快捷搜索工具",
+  "version": "1.0",
+  "manifest_version": 3,
+  "description": "选中文本后右击可以快速搜索百度、Google和有道词典",
+  "permissions": [
+    "contextMenus"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "icons": {
+    "16": "icons/16.png",
+    "48": "icons/48.png",
+    "128": "icons/128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/16.png",
+      "48": "icons/48.png",
+      "128": "icons/128.png"
+    }
+  }
+}

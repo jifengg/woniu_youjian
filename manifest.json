@@ -4,7 +4,8 @@
   "manifest_version": 3,
   "description": "选中文本后右击可以快速搜索百度、Google和有道词典",
   "permissions": [
-    "contextMenus"
+    "contextMenus",
+    "storage"
   ],
   "background": {
     "service_worker": "background.js"
@@ -21,5 +22,9 @@
       "48": "icons/48.png",
       "128": "icons/128.png"
     }
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
   }
 }

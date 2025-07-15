@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>蜗牛有剑 - 配置</title>
+  <link href="options.css" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>蜗牛有剑 - 配置</h1>
+    </header>
+
+    <div class="tabs">
+      <button class="tab-button active" data-tab="text">划词菜单</button>
+      <button class="tab-button" data-tab="page">页面菜单</button>
+      <button class="tab-button" data-tab="link">链接菜单</button>
+      <button class="tab-button" data-tab="image">图片菜单</button>
+      <button class="tab-button" data-tab="settings">设置</button>
+    </div>
+
+    <div class="tab-content">
+      <div id="text" class="tab-pane active">
+        <h2>划词菜单配置</h2>
+        <div class="menu-list" id="text-menu-list">
+          <!-- 菜单项将通过JavaScript动态添加 -->
+        </div>
+        <div class="add-menu">
+          <div class="menu-item">
+            <div class="checkbox-placeholder"></div>
+            <input type="text" class="input-title" placeholder="名称" id="text-new-title">
+            <input type="text" class="input-url" placeholder="URL (使用%s作为占位符)" id="text-new-url">
+            <button class="add-button" id="text-add-button">添加</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="page" class="tab-pane">
+        <h2>页面菜单配置</h2>
+        <div class="menu-list" id="page-menu-list">
+          <!-- 菜单项将通过JavaScript动态添加 -->
+        </div>
+        <div class="add-menu">
+          <div class="menu-item">
+            <div class="checkbox-placeholder"></div>
+            <input type="text" class="input-title" placeholder="名称" id="page-new-title">
+            <input type="text" class="input-url" placeholder="URL (使用%s作为占位符)" id="page-new-url">
+            <button class="add-button" id="page-add-button">添加</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="link" class="tab-pane">
+        <h2>链接菜单配置</h2>
+        <div class="menu-list" id="link-menu-list">
+          <!-- 菜单项将通过JavaScript动态添加 -->
+        </div>
+        <div class="add-menu">
+          <div class="menu-item">
+            <div class="checkbox-placeholder"></div>
+            <input type="text" class="input-title" placeholder="名称" id="link-new-title">
+            <input type="text" class="input-url" placeholder="URL (使用%s作为占位符)" id="link-new-url">
+            <button class="add-button" id="link-add-button">添加</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="image" class="tab-pane">
+        <h2>图片菜单配置</h2>
+        <div class="menu-list" id="image-menu-list">
+          <!-- 菜单项将通过JavaScript动态添加 -->
+        </div>
+        <div class="add-menu">
+          <div class="menu-item">
+            <div class="checkbox-placeholder"></div>
+            <input type="text" class="input-title" placeholder="名称" id="image-new-title">
+            <input type="text" class="input-url" placeholder="URL (使用%s作为占位符)" id="image-new-url">
+            <button class="add-button" id="image-add-button">添加</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="settings" class="tab-pane">
+        <h2>设置</h2>
+        <div class="settings-info">
+          <div class="info-item">
+            <div class="info-label">名称:</div>
+            <div class="info-value" id="extension-name"></div>
+          </div>
+          <div class="info-item">
+            <div class="info-label">版本:</div>
+            <div class="info-value" id="extension-version"></div>
+          </div>
+          <div class="info-item">
+            <div class="info-label">作者:</div>
+            <div class="info-value">蜗牛有剑</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button id="save-button" class="primary-button">保存配置</button>
+      <div id="status-message"></div>
+    </div>
+  </div>
+
+  <script src="options.js"></script>
+</body>
+</html>

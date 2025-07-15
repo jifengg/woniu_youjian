@@ -80,6 +80,14 @@ function renderMenuList(tabId, configType) {
     checkbox.checked = item.enable !== false; // 默认为true
     checkbox.addEventListener('change', () => {
       config[configType][index].enable = checkbox.checked;
+
+      // 自动保存配置
+      saveConfig().then(() => {
+        showStatusMessage(checkbox.checked ? '菜单项已启用并保存' : '菜单项已禁用并保存', 'success');
+      }).catch(error => {
+        console.error('自动保存失败:', error);
+        showStatusMessage('状态更改成功，但保存失败', 'error');
+      });
     });
 
     checkboxWrapper.appendChild(checkbox);
@@ -123,6 +131,14 @@ function renderMenuList(tabId, configType) {
         [config[configType][index], config[configType][index - 1]] = 
         [config[configType][index - 1], config[configType][index]];
         renderMenuList(tabId, configType); // 重新渲染列表
+
+        // 自动保存配置
+        saveConfig().then(() => {
+          showStatusMessage('菜单项上移成功并已保存', 'success');
+        }).catch(error => {
+          console.error('自动保存失败:', error);
+          showStatusMessage('菜单项上移成功，但保存失败', 'error');
+        });
       }
     });
     actionButtons.appendChild(upButton);
@@ -139,6 +155,14 @@ function renderMenuList(tabId, configType) {
         [config[configType][index], config[configType][index + 1]] = 
         [config[configType][index + 1], config[configType][index]];
         renderMenuList(tabId, configType); // 重新渲染列表
+
+        // 自动保存配置
+        saveConfig().then(() => {
+          showStatusMessage('菜单项下移成功并已保存', 'success');
+        }).catch(error => {
+          console.error('自动保存失败:', error);
+          showStatusMessage('菜单项下移成功，但保存失败', 'error');
+        });
       }
     });
     actionButtons.appendChild(downButton);
@@ -152,6 +176,14 @@ function renderMenuList(tabId, configType) {
       if (confirm('确定要删除这个菜单项吗？')) {
         config[configType].splice(index, 1);
         renderMenuList(tabId, configType); // 重新渲染列表
+
+        // 自动保存配置
+        saveConfig().then(() => {
+          showStatusMessage('菜单项删除成功并已保存', 'success');
+        }).catch(error => {
+          console.error('自动保存失败:', error);
+          showStatusMessage('菜单项删除成功，但保存失败', 'error');
+        });
       }
     });
     actionButtons.appendChild(deleteButton);
@@ -210,7 +242,13 @@ function setupAddMenuButtons() {
         // 重新渲染菜单列表
         renderMenuList(tabId, configType);
 
-        showStatusMessage('菜单项添加成功', 'success');
+        // 自动保存配置
+        saveConfig().then(() => {
+          showStatusMessage('菜单项添加成功并已保存', 'success');
+        }).catch(error => {
+          console.error('自动保存失败:', error);
+          showStatusMessage('菜单项添加成功，但保存失败', 'error');
+        });
       } else {
         showStatusMessage('名称和URL不能为空', 'error');
       }

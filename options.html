@@ -18,6 +18,7 @@
       <button class="tab-button" data-tab="link">链接菜单</button>
       <button class="tab-button" data-tab="image">图片菜单</button>
       <button class="tab-button" data-tab="settings">设置</button>
+      <button class="tab-button" data-tab="about">关于</button>
     </div>
 
     <div class="tab-content">
@@ -83,6 +84,26 @@
 
       <div id="settings" class="tab-pane">
         <h2>设置</h2>
+
+        <div class="settings-section">
+          <h3>配置管理</h3>
+          <div class="settings-config">
+            <div class="config-actions">
+              <button id="export-config" class="config-button">导出配置</button>
+              <button id="import-config" class="config-button">导入配置</button>
+              <input type="file" id="config-file-input" accept=".json" style="display:none">
+              <div class="import-note">支持导入"右键搜"的配置</div>
+            </div>
+            <div class="config-view">
+              <h4>当前配置</h4>
+              <pre id="config-preview"></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="about" class="tab-pane">
+        <h2>关于</h2>
         <div class="settings-section">
           <h3>基本信息</h3>
           <div class="settings-info">
@@ -100,20 +121,11 @@
             </div>
           </div>
         </div>
-
         <div class="settings-section">
-          <h3>配置管理</h3>
-          <div class="settings-config">
-            <div class="config-actions">
-              <button id="export-config" class="config-button">导出配置</button>
-              <button id="import-config" class="config-button">导入配置</button>
-              <input type="file" id="config-file-input" accept=".json" style="display:none">
-              <div class="import-note">支持导入"右键搜"的配置</div>
-            </div>
-            <div class="config-view">
-              <h4>当前配置</h4>
-              <pre id="config-preview"></pre>
-            </div>
+          <h3>项目介绍</h3>
+          <div class="about-content">
+            <p>蜗牛右键是一款为浏览器提供自定义右键菜单的扩展程序，让您可以更高效地进行网页操作和搜索。</p>
+            <p>支持划词搜索、页面搜索、链接操作以及图片处理等多种自定义菜单项。</p>
           </div>
         </div>
       </div>

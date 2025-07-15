@@ -2,7 +2,7 @@
   "name": "蜗牛右键",
   "version": "1.0",
   "manifest_version": 3,
-  "description": "选中文本后右击可以快速搜索百度、Google和有道词典",
+  "description": "一款为浏览器提供自定义右键菜单的扩展程序，让您可以更高效地进行网页操作和搜索。",
   "author": "jifengg",
   "permissions": [
     "contextMenus",

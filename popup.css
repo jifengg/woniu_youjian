@@ -5,6 +5,7 @@ body {
   margin: 0;
   padding: 10px;
   color: #333;
+  background-color: #ffffff;
 }
 
 .container {
@@ -21,6 +22,8 @@ body {
   border-radius: 4px;
   margin-bottom: 10px;
   box-sizing: border-box;
+  background-color: #ffffff;
+  color: #333;
 }
 
 #search-input:focus {
@@ -45,6 +48,7 @@ body {
   transition: all 0.2s;
   text-align: center;
   font-size: 13px;
+  color: #333;
 }
 
 .search-button:hover {
@@ -86,6 +90,7 @@ body {
   align-items: center;
   justify-content: center;
   transition: transform 0.2s;
+  color: #888;
 }
 
 .settings-icon:hover {
@@ -94,4 +99,41 @@ body {
 
 .settings-icon:focus {
   outline: none;
+}
+
+/* 深色模式样式 */
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #292a2d;
+    color: #e8eaed;
+  }
+
+  #search-input {
+    background-color: #202124;
+    color: #e8eaed;
+    border-color: #5f6368;
+  }
+
+  #search-input:focus {
+    border-color: #8ab4f8;
+    box-shadow: 0 0 0 2px rgba(138, 180, 248, 0.2);
+  }
+
+  .search-button {
+    background-color: #3c4043;
+    border-color: #5f6368;
+    color: #e8eaed;
+  }
+
+  .search-button:hover {
+    background-color: #4a4d51;
+  }
+
+  .version-info {
+    color: #9aa0a6;
+  }
+
+  .settings-icon {
+    color: #9aa0a6;
+  }
 }

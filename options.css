@@ -499,6 +499,15 @@ h2 {
     color: #9aa0a6;
   }
 
+  .info-value a {
+    color: #8ab4f8;
+    text-decoration: none;
+  }
+
+  .info-value a:hover {
+    text-decoration: underline;
+  }
+
   .settings-config {
     background-color: #1f2021;
   }

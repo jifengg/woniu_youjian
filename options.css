@@ -295,8 +295,17 @@ h2 {
 
 .config-actions {
   display: flex;
+  flex-wrap: wrap;
   gap: 10px;
   margin-bottom: 15px;
+  align-items: center;
+}
+
+.import-note {
+  font-size: 12px;
+  color: #666;
+  margin-left: 5px;
+  font-style: italic;
 }
 
 .config-button {
@@ -500,6 +509,10 @@ h2 {
 
   .config-button:hover {
     background-color: #1967d2;
+  }
+
+  .import-note {
+    color: #9aa0a6;
   }
 
   .config-view h4 {

@@ -131,8 +131,8 @@ function renderMenuList(tabId, configType) {
     upButton.addEventListener('click', () => {
       if (index > 0) {
         // 交换当前项与上一项
-        [config[configType][index], config[configType][index - 1]] = 
-        [config[configType][index - 1], config[configType][index]];
+        [config[configType][index], config[configType][index - 1]] =
+          [config[configType][index - 1], config[configType][index]];
         renderMenuList(tabId, configType); // 重新渲染列表
 
         // 自动保存配置
@@ -155,8 +155,8 @@ function renderMenuList(tabId, configType) {
     downButton.addEventListener('click', () => {
       if (index < config[configType].length - 1) {
         // 交换当前项与下一项
-        [config[configType][index], config[configType][index + 1]] = 
-        [config[configType][index + 1], config[configType][index]];
+        [config[configType][index], config[configType][index + 1]] =
+          [config[configType][index + 1], config[configType][index]];
         renderMenuList(tabId, configType); // 重新渲染列表
 
         // 自动保存配置
@@ -376,7 +376,7 @@ function setupConfigManagement() {
       const configJson = JSON.stringify(configToExport, null, 2);
 
       // 创建Blob
-      const blob = new Blob([configJson], {type: 'application/json'});
+      const blob = new Blob([configJson], { type: 'application/json' });
 
       // 创建下载链接
       const downloadUrl = URL.createObjectURL(blob);
@@ -414,43 +414,37 @@ function setupConfigManagement() {
     reader.onload = (e) => {
       try {
         // 解析JSON
-        const importedConfig = JSON.parse(e.target.result);
+        const jsonData = JSON.parse(e.target.result);
+        let importedConfig;
+        let isOldFormat = false;
 
-        // 基本验证
-        if (!importedConfig.text_contexts || !importedConfig.page_contexts || 
+        // 检测是否是旧格式（右键搜）
+        if (jsonData.txtSelect || jsonData.menSelect || jsonData.linSelect || jsonData.picSelect) {
+          isOldFormat = true;
+          // 如果函数已经定义，直接转换
+          const result = convertJsonString(e.target.result);
+          if (result.success) {
+            importedConfig = result.config;
+          } else {
+            throw new Error('转换旧格式配置失败: ' + result.message);
+          }
+        } else {
+          // 新格式配置
+          importedConfig = jsonData;
+
+          // 基本验证
+          if (!importedConfig.text_contexts || !importedConfig.page_contexts ||
             !importedConfig.link_contexts || !importedConfig.image_contexts) {
-          throw new Error('导入的配置格式无效，必须包含所有必要的菜单类型');
+            throw new Error('导入的配置格式无效，必须包含所有必要的菜单类型');
+          }
         }
 
-        // 确认是否导入
-        if (confirm('确定要导入此配置吗？这将覆盖您当前的所有菜单配置。')) {
-          // 更新配置
-          config.text_contexts = importedConfig.text_contexts || [];
-          config.page_contexts = importedConfig.page_contexts || [];
-          config.link_contexts = importedConfig.link_contexts || [];
-          config.image_contexts = importedConfig.image_contexts || [];
-
-          // 重新渲染菜单列表
-          renderAllMenuLists();
-
-          // 更新配置预览
-          updateConfigPreview();
-
-          // 保存配置
-          saveConfig().then(() => {
-            showStatusMessage('配置导入成功并已保存！', 'success');
-          }).catch(error => {
-            console.error('保存导入的配置失败:', error);
-            showStatusMessage('配置导入成功，但保存失败: ' + error.message, 'error');
-          });
-        }
+        processImportedConfig(importedConfig, isOldFormat);
       } catch (error) {
         console.error('配置导入失败:', error);
         showStatusMessage('配置导入失败: ' + error.message, 'error');
+        fileInput.value = '';
       }
-
-      // 清除文件输入，允许选择相同的文件
-      fileInput.value = '';
     };
 
     reader.onerror = () => {
@@ -460,6 +454,42 @@ function setupConfigManagement() {
 
     reader.readAsText(file);
   });
+
+  // 处理导入的配置
+  function processImportedConfig(importedConfig, isOldFormat) {
+    // 确认是否导入
+    const message = isOldFormat
+      ? '检测到"右键搜"格式配置并已转换。确定要导入此配置吗？这将覆盖您当前的所有菜单配置。'
+      : '确定要导入此配置吗？这将覆盖您当前的所有菜单配置。';
+
+    if (confirm(message)) {
+      // 更新配置
+      config.text_contexts = importedConfig.text_contexts || [];
+      config.page_contexts = importedConfig.page_contexts || [];
+      config.link_contexts = importedConfig.link_contexts || [];
+      config.image_contexts = importedConfig.image_contexts || [];
+
+      // 重新渲染菜单列表
+      renderAllMenuLists();
+
+      // 更新配置预览
+      updateConfigPreview();
+
+      // 保存配置
+      saveConfig().then(() => {
+        const successMsg = isOldFormat
+          ? '"右键搜"配置转换成功并已保存！'
+          : '配置导入成功并已保存！';
+        showStatusMessage(successMsg, 'success');
+      }).catch(error => {
+        console.error('保存导入的配置失败:', error);
+        showStatusMessage('配置导入成功，但保存失败: ' + error.message, 'error');
+      });
+    }
+
+    // 清除文件输入，允许选择相同的文件
+    document.getElementById('config-file-input').value = '';
+  }
 
   // 初始显示配置
   updateConfigPreview();

@@ -1,8 +1,9 @@
 {
-  "name": "快捷搜索工具",
+  "name": "蜗牛右键",
   "version": "1.0",
   "manifest_version": 3,
   "description": "选中文本后右击可以快速搜索百度、Google和有道词典",
+  "author": "jifengg",
   "permissions": [
     "contextMenus",
     "storage"

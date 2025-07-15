@@ -324,4 +324,6 @@ function displayExtensionInfo() {
   const manifest = chrome.runtime.getManifest();
   document.getElementById('extension-name').textContent = manifest.name;
   document.getElementById('extension-version').textContent = manifest.version;
+  // 显示作者信息
+  document.querySelector('.info-value:nth-of-type(3)').textContent = manifest.author || "jifengg";
 }

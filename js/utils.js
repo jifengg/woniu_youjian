@@ -16,8 +16,8 @@ function processUrl(urlTemplate, text) {
     return '';
   }
 
-  // 替换 %s 为编码后的文本
-  let processedUrl = urlTemplate.replace(/%s/g, encodeURIComponent(text));
+  // 替换 %s 为编码后的文本,兼容“右键搜”%S|%g|%G|%t|%T，
+  let processedUrl = urlTemplate.replace(/%s|%S|%g|%G|%t|%T/g, encodeURIComponent(text));
 
   // 替换 %os 为原始文本（不编码）
   processedUrl = processedUrl.replace(/%os/g, text);

@@ -110,15 +110,21 @@
   "image_contexts": [
     {
       "enable": true,
-      "id": "image-1",
-      "title": "Parsing QR in the images",
-      "url": "qr_decode"
+      "id": "image-5",
+      "title": "图片链接转为二维码",
+      "url": "https://tool.oschina.net/action/qrcode/generate?output=image%2Fpng&error=L&type=0&margin=4&size=4&data=%s"
     },
     {
       "enable": true,
-      "id": "image-2",
-      "title": "Google Images",
-      "url": "http://www.google.com/searchbyimage?image_url=%s"
+      "id": "image-1",
+      "title": "Google以图搜图",
+      "url": "https://images.google.com/searchbyimage?image_url=%s"
+    },
+    {
+      "enable": true,
+      "id": "image-4",
+      "title": "图片二维码解析",
+      "url": "https://zxing.org/w/decode?u=%s"
     }
   ]
 }

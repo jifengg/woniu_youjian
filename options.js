@@ -38,8 +38,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 // 加载配置
 async function loadConfig() {
   try {
-    const response = await fetch(chrome.runtime.getURL('config.json'));
-    config = await response.json();
+    // 使用utils.js中的共享函数加载配置
+    config = await loadMenuConfig();
     console.log('配置加载成功:', config);
   } catch (error) {
     console.error('加载配置失败:', error);

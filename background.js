@@ -94,11 +94,14 @@ chrome.runtime.onInstalled.addListener(async () => {
   // 创建选中文本菜单项
   if (config.text_contexts && config.text_contexts.length > 0) {
     config.text_contexts.forEach(item => {
-      chrome.contextMenus.create({
-        id: item.id,
-        title: item.title,
-        contexts: ["selection"]
-      });
+      // 只有当enable为true或未定义时创建菜单项
+      if (item.enable !== false) {
+        chrome.contextMenus.create({
+          id: item.id,
+          title: item.title,
+          contexts: ["selection"]
+        });
+      }
     });
   } else {
     console.warn('配置文件中没有找到有效的文本选择菜单项');
@@ -115,11 +118,14 @@ chrome.runtime.onInstalled.addListener(async () => {
 
     // 创建页面右键菜单组
     config.page_contexts.forEach(item => {
-      chrome.contextMenus.create({
-        id: item.id,
-        title: item.title,
-        contexts: ["page"]
-      });
+      // 只有当enable为true或未定义时创建菜单项
+      if (item.enable !== false) {
+        chrome.contextMenus.create({
+          id: item.id,
+          title: item.title,
+          contexts: ["page"]
+        });
+      }
     });
   } else {
     console.warn('配置文件中没有找到有效的页面菜单项');
@@ -136,11 +142,14 @@ chrome.runtime.onInstalled.addListener(async () => {
 
     // 创建链接右键菜单组
     config.link_contexts.forEach(item => {
-      chrome.contextMenus.create({
-        id: item.id,
-        title: item.title,
-        contexts: ["link"]
-      });
+      // 只有当enable为true或未定义时创建菜单项
+      if (item.enable !== false) {
+        chrome.contextMenus.create({
+          id: item.id,
+          title: item.title,
+          contexts: ["link"]
+        });
+      }
     });
   } else {
     console.warn('配置文件中没有找到有效的链接菜单项');
@@ -157,11 +166,14 @@ chrome.runtime.onInstalled.addListener(async () => {
 
     // 创建图片右键菜单组
     config.image_contexts.forEach(item => {
-      chrome.contextMenus.create({
-        id: item.id,
-        title: item.title,
-        contexts: ["image"]
-      });
+      // 只有当enable为true或未定义时创建菜单项
+      if (item.enable !== false) {
+        chrome.contextMenus.create({
+          id: item.id,
+          title: item.title,
+          contexts: ["image"]
+        });
+      }
     });
   } else {
     console.warn('配置文件中没有找到有效的图片菜单项');

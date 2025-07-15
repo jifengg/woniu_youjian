@@ -1,131 +1,157 @@
 {
   "text_contexts": [
     {
+      "enable": true,
       "id": "id-1",
       "title": "百度",
       "url": "http://www.baidu.com/s?wd=%s"
     },
     {
+      "enable": true,
       "id": "id-2",
       "title": "淘宝",
       "url": "http://s.taobao.com/search?q=%g"
     },
     {
+      "enable": true,
       "id": "id-3",
       "title": "有道词典",
       "url": "http://dict.youdao.com/search?q=%s&keyfrom=dict.index"
     },
     {
+      "enable": true,
       "id": "id-4",
       "title": "优酷",
       "url": "http://www.soku.com/search_video/q_%s"
     },
     {
+      "enable": true,
       "id": "id-5",
       "title": "一淘",
       "url": "http://s.etao.com/search?nq=%s"
     },
     {
+      "enable": true,
       "id": "id-6",
       "title": "百度词典",
       "url": "http://dict.baidu.com/s?wd=%s"
     },
     {
+      "enable": true,
       "id": "id-7",
       "title": "选择文字生成二维码[蜗牛范]",
       "url": "https://api.woniufun.com/QRCode/?level=1&size=5&margin=4&data=%s"
     },
     {
+      "enable": true,
       "id": "id-8",
       "title": "IP查询",
       "url": "http://api.dm.tvmining.com/IPUtils/?format=xml&ip=%s"
     },
     {
+      "enable": true,
       "id": "id-9",
       "title": "豆瓣电影",
       "url": "http://movie.douban.com/subject_search?search_text=%s&cat=1002"
     },
     {
+      "enable": true,
       "id": "id-10",
       "title": "字幕搜索",
       "url": "http://www.subom.net/search/%s"
     },
     {
+      "enable": true,
       "id": "id-11",
       "title": "历史低价",
       "url": "http://www.xitie.com/s.php?no=%s"
     },
     {
+      "enable": true,
       "id": "id-12",
       "title": "什么值得买",
       "url": "http://search.smzdm.com/?c=youhui&s=%s"
     },
     {
+      "enable": true,
       "id": "id-13",
       "title": "京东网",
       "url": "http://search.jd.com/Search?keyword=%s&enc=utf-8"
     },
     {
+      "enable": false,
       "id": "id-14",
       "title": "ED2000",
       "url": "http://search.ed2000.com/cse/search?s=5102198518115871963&q=%s"
     },
     {
+      "enable": false,
       "id": "id-16",
       "title": "BT之家",
       "url": "https://www.btbtt11.com/search-index-keyword-%s.htm"
     },
     {
+      "enable": true,
       "id": "id-17",
       "title": "加入京东购物车",
       "url": "http://cart.jd.com/gate.action?pid=%s&pcount=1&ptype=1"
     },
     {
+      "enable": true,
       "id": "id-18",
       "title": "阿里妈妈",
       "url": "http://pub.alimama.com/promo/search/index.htm?q=%s&_t=1479375646243"
     },
     {
+      "enable": false,
       "id": "id-19",
       "title": "爬虫",
       "url": "http://vgs.yaomall.tvm.cn/py_api/api/spider?url=%s"
     },
     {
+      "enable": true,
       "id": "id-20",
       "title": "Google",
       "url": "https://www.google.com/search?q=%s"
     },
     {
+      "enable": false,
       "id": "id-21",
       "title": "重新生成Yapi页面",
       "url": "http://192.168.1.81:1081/yapi-export.php?token=%s"
     },
     {
+      "enable": true,
       "id": "id-22",
       "title": "deepl中->英",
       "url": "https://www.deepl.com/translator#zh/en/%s"
     },
     {
+      "enable": true,
       "id": "id-23",
       "title": "deepl英->中",
       "url": "https://www.deepl.com/translator#en/zh/%s"
     },
     {
+      "enable": true,
       "id": "id-24",
       "title": "pub.dev",
       "url": "https://pub.dev/packages?q=%s"
     },
     {
+      "enable": false,
       "id": "id-25",
       "title": "YouChat",
       "url": "https://you.com/search?q=%s&fromSearchBar=true&tbm=youchat"
     },
     {
+      "enable": true,
       "id": "id-26",
       "title": "npm",
       "url": "https://www.npmjs.com/search?q=%s"
     },
     {
+      "enable": true,
       "id": "id-27",
       "title": "Bilibili",
       "url": "https://search.bilibili.com/all?keyword=%s"
@@ -133,26 +159,31 @@
   ],
   "page_contexts": [
     {
+      "enable": true,
       "id": "page-1",
       "title": "当前网址生成二维码[蜗牛范]",
       "url": "https://api.woniufun.com/QRCode/?level=1&size=5&margin=4&data=%s"
     },
     {
+      "enable": true,
       "id": "page-2",
       "title": "历史低价",
       "url": "http://www.xitie.com/s.php?no=%s"
     },
     {
+      "enable": true,
       "id": "page-3",
       "title": "阿里妈妈",
       "url": "http://pub.alimama.com/promo/search/index.htm?q=%s&_t=1479375646243"
     },
     {
+      "enable": true,
       "id": "page-4",
       "title": "京东库存（本地）",
       "url": "http://local.com/stock.php?url=%s"
     },
     {
+      "enable": true,
       "id": "page-5",
       "title": "爬虫",
       "url": "http://vgs.yaomall.tvm.cn/py_api/api/spider?url=%s"
@@ -160,26 +191,31 @@
   ],
   "link_contexts": [
     {
+      "enable": true,
       "id": "link-1",
       "title": "当前链接生成二维码[蜗牛范]",
       "url": "http://api.woniufun.com/QRCode/?level=1&size=5&margin=4&data=%s"
     },
     {
+      "enable": true,
       "id": "link-2",
       "title": "历史低价",
       "url": "http://www.xitie.com/s.php?no=%s"
     },
     {
+      "enable": true,
       "id": "link-3",
       "title": "阿里妈妈",
       "url": "http://pub.alimama.com/promo/search/index.htm?q=%s&_t=1479375646243"
     },
     {
+      "enable": true,
       "id": "link-4",
       "title": "查询库存",
       "url": "http://cha.178hui.com/?url=%s"
     },
     {
+      "enable": true,
       "id": "link-5",
       "title": "京东库存（本地）",
       "url": "http://local.com/stock.php?url=%s"
@@ -187,11 +223,13 @@
   ],
   "image_contexts": [
     {
+      "enable": true,
       "id": "image-1",
       "title": "Parsing QR in the images",
       "url": "qr_decode"
     },
     {
+      "enable": true,
       "id": "image-2",
       "title": "Google Images",
       "url": "http://www.google.com/searchbyimage?image_url=%s"

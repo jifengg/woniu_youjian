@@ -301,3 +301,127 @@ h2 {
     margin-left: auto;
   }
 }
+
+/* 深色模式样式 */
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #292a2d;
+    color: #e8eaed;
+  }
+
+  .container {
+    background-color: #202124;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  }
+
+  header {
+    border-bottom: 1px solid #444;
+  }
+
+  h1, h2 {
+    color: #e8eaed;
+  }
+
+  .tabs {
+    border-bottom: 1px solid #444;
+  }
+
+  .tab-button {
+    color: #9aa0a6;
+  }
+
+  .tab-button:hover {
+    color: #8ab4f8;
+  }
+
+  .tab-button.active {
+    color: #8ab4f8;
+    border-bottom: 2px solid #8ab4f8;
+  }
+
+  .menu-item {
+    border-bottom: 1px solid #444;
+  }
+
+  .custom-checkbox {
+    border: 2px solid #5f6368;
+    background-color: #292a2d;
+  }
+
+  .custom-checkbox:checked {
+    border-color: #8ab4f8;
+    background-color: #8ab4f8;
+  }
+
+  .input-title, .input-url {
+    background-color: #202124;
+    color: #e8eaed;
+    border: 1px solid #5f6368;
+  }
+
+  .input-title:focus, .input-url:focus {
+    outline: none;
+    border-color: #8ab4f8;
+    box-shadow: 0 0 0 2px rgba(138, 180, 248, 0.2);
+  }
+
+  .btn:hover {
+    background-color: #3c4043;
+  }
+
+  .btn {
+    color: #9aa0a6;
+  }
+
+  .btn-up:hover, .btn-down:hover {
+    color: #8ab4f8;
+  }
+
+  .btn-delete:hover {
+    color: #f28b82;
+  }
+
+  .add-menu {
+    border-top: 1px dashed #444;
+  }
+
+  .add-button {
+    background-color: #188038;
+  }
+
+  .add-button:hover {
+    background-color: #137333;
+  }
+
+  .actions {
+    border-top: 1px solid #444;
+  }
+
+  .primary-button {
+    background-color: #1a73e8;
+  }
+
+  .primary-button:hover {
+    background-color: #1967d2;
+  }
+
+  .status-success {
+    color: #81c995;
+  }
+
+  .status-error {
+    color: #f28b82;
+  }
+
+  .settings-info {
+    background-color: #1f2021;
+  }
+
+  .info-value {
+    color: #9aa0a6;
+  }
+
+  .no-items {
+    color: #9aa0a6;
+  }
+}

@@ -359,7 +359,13 @@ function setupConfigManagement() {
   // 获取元素引用
   const exportConfigButton = document.getElementById('export-config');
   const importConfigButton = document.getElementById('import-config');
+  const pasteConfigButton = document.getElementById('paste-config');
   const fileInput = document.getElementById('config-file-input');
+  const pasteModal = document.getElementById('paste-modal');
+  const closeModal = document.querySelector('.close-modal');
+  const confirmPasteButton = document.getElementById('confirm-paste');
+  const cancelPasteButton = document.getElementById('cancel-paste');
+  const configPasteArea = document.getElementById('config-paste-area');
 
   // 导出配置
   exportConfigButton.addEventListener('click', () => {
@@ -402,6 +408,77 @@ function setupConfigManagement() {
   // 导入配置按钮点击事件
   importConfigButton.addEventListener('click', () => {
     fileInput.click();
+  });
+
+  // 粘贴配置按钮点击事件
+  pasteConfigButton.addEventListener('click', () => {
+    // 显示模态对话框
+    pasteModal.style.display = 'flex';
+    configPasteArea.value = ''; // 清空文本区域
+    configPasteArea.focus();
+  });
+
+  // 关闭模态对话框
+  closeModal.addEventListener('click', () => {
+    pasteModal.style.display = 'none';
+  });
+
+  // 点击模态对话框外部关闭
+  window.addEventListener('click', (event) => {
+    if (event.target === pasteModal) {
+      pasteModal.style.display = 'none';
+    }
+  });
+
+  // 取消按钮点击事件
+  cancelPasteButton.addEventListener('click', () => {
+    pasteModal.style.display = 'none';
+  });
+
+  // 确认粘贴按钮点击事件
+  confirmPasteButton.addEventListener('click', () => {
+    const pastedText = configPasteArea.value.trim();
+    if (!pastedText) {
+      showStatusMessage('请粘贴配置内容', 'error');
+      return;
+    }
+
+    try {
+      // 解析JSON
+      const jsonData = JSON.parse(pastedText);
+      let importedConfig;
+      let isOldFormat = false;
+
+      // 检测是否是旧格式（右键搜）
+      if (jsonData.txtSelect || jsonData.menSelect || jsonData.linSelect || jsonData.picSelect) {
+        isOldFormat = true;
+        // 转换旧格式
+        const result = convertJsonString(pastedText);
+        if (result.success) {
+          importedConfig = result.config;
+        } else {
+          throw new Error('转换旧格式配置失败: ' + result.message);
+        }
+      } else {
+        // 新格式配置
+        importedConfig = jsonData;
+
+        // 基本验证
+        if (!importedConfig.text_contexts || !importedConfig.page_contexts ||
+          !importedConfig.link_contexts || !importedConfig.image_contexts) {
+          throw new Error('粘贴的配置格式无效，必须包含所有必要的菜单类型');
+        }
+      }
+
+      // 关闭模态对话框
+      pasteModal.style.display = 'none';
+
+      // 处理导入的配置
+      processImportedConfig(importedConfig, isOldFormat);
+    } catch (error) {
+      console.error('解析粘贴的配置失败:', error);
+      showStatusMessage('解析粘贴的配置失败: ' + error.message, 'error');
+    }
   });
 
   // 文件选择事件

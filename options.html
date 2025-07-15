@@ -91,6 +91,7 @@
             <div class="config-actions">
               <button id="export-config" class="config-button">导出配置</button>
               <button id="import-config" class="config-button">导入配置</button>
+              <button id="paste-config" class="config-button">粘贴配置</button>
               <input type="file" id="config-file-input" accept=".json" style="display:none">
               <div class="import-note">支持导入"右键搜"的配置</div>
             </div>
@@ -134,6 +135,24 @@
     <div class="actions">
       <button id="save-button" class="primary-button">保存配置</button>
       <div id="status-message"></div>
+    </div>
+  </div>
+
+  <!-- 粘贴配置的模态对话框 -->
+  <div id="paste-modal" class="modal" style="display:none;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>粘贴配置</h3>
+        <span class="close-modal">&times;</span>
+      </div>
+      <div class="modal-body">
+        <p>请粘贴配置JSON内容：</p>
+        <textarea id="config-paste-area" rows="10" style="width:100%; margin-top:10px;"></textarea>
+      </div>
+      <div class="modal-footer">
+        <button id="confirm-paste" class="config-button">确认</button>
+        <button id="cancel-paste" class="config-button" style="background-color:#666;">取消</button>
+      </div>
     </div>
   </div>
 

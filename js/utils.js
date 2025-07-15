@@ -36,8 +36,31 @@ async function loadMenuConfig() {
   }
 
   try {
-    const response = await fetch(chrome.runtime.getURL('config.json'));
-    const config = await response.json();
+    // 首先尝试从Chrome存储中读取配置
+    let config;
+
+    // 如果在浏览器环境中运行
+    if (typeof chrome !== 'undefined' && chrome.storage) {
+      // 使用Promise包装chrome.storage.sync.get调用
+      const storageData = await new Promise((resolve) => {
+        chrome.storage.sync.get('config', (data) => {
+          resolve(data);
+        });
+      });
+
+      // 如果存储中有配置，使用它
+      if (storageData && storageData.config) {
+        console.log('从存储中加载配置成功');
+        config = storageData.config;
+      }
+    }
+
+    // 如果存储中没有配置，从config.json文件读取
+    if (!config) {
+      console.log('从存储中未找到配置，从文件加载配置');
+      const response = await fetch(chrome.runtime.getURL('config.json'));
+      config = await response.json();
+    }
 
     // 为每个菜单项添加type标识
     if (config.text_contexts && config.text_contexts.length > 0) {
@@ -75,7 +98,7 @@ async function loadMenuConfig() {
     menuConfig = config;
     return menuConfig;
   } catch (error) {
-    console.error('加载配置文件失败:', error);
+    console.error('加载配置失败:', error);
     menuConfig = {
       text_contexts: [],
       page_contexts: [],

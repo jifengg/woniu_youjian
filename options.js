@@ -33,6 +33,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // 显示扩展信息
   displayExtensionInfo();
+
+  // 初始化配置管理功能
+  setupConfigManagement();
 });
 
 // 加载配置
@@ -208,6 +211,12 @@ function setupTabs() {
       tab.classList.add('active');
       const tabId = tab.dataset.tab;
       document.getElementById(tabId).classList.add('active');
+
+      // 如果切换到设置选项卡，更新配置预览
+      if (tabId === 'settings') {
+        // 调用更新配置预览函数
+        updateConfigPreview();
+      }
     });
   });
 }
@@ -326,4 +335,132 @@ function displayExtensionInfo() {
   document.getElementById('extension-version').textContent = manifest.version;
   // 显示作者信息
   document.getElementById('extension-author').textContent = manifest.author || "jifengg";
+}
+
+// 显示当前配置
+function updateConfigPreview() {
+  const configPreview = document.getElementById('config-preview');
+  if (!configPreview) return;
+
+  // 创建干净的配置对象（不包含临时数据）
+  const configToDisplay = {
+    text_contexts: config.text_contexts.map(cleanItem),
+    page_contexts: config.page_contexts.map(cleanItem),
+    link_contexts: config.link_contexts.map(cleanItem),
+    image_contexts: config.image_contexts.map(cleanItem)
+  };
+
+  // 格式化JSON并显示
+  configPreview.textContent = JSON.stringify(configToDisplay, null, 2);
+}
+
+// 配置管理功能
+function setupConfigManagement() {
+  // 获取元素引用
+  const exportConfigButton = document.getElementById('export-config');
+  const importConfigButton = document.getElementById('import-config');
+  const fileInput = document.getElementById('config-file-input');
+
+  // 导出配置
+  exportConfigButton.addEventListener('click', () => {
+    try {
+      // 创建干净的配置对象
+      const configToExport = {
+        text_contexts: config.text_contexts.map(cleanItem),
+        page_contexts: config.page_contexts.map(cleanItem),
+        link_contexts: config.link_contexts.map(cleanItem),
+        image_contexts: config.image_contexts.map(cleanItem)
+      };
+
+      // 转换为JSON字符串
+      const configJson = JSON.stringify(configToExport, null, 2);
+
+      // 创建Blob
+      const blob = new Blob([configJson], {type: 'application/json'});
+
+      // 创建下载链接
+      const downloadUrl = URL.createObjectURL(blob);
+      const downloadLink = document.createElement('a');
+      downloadLink.href = downloadUrl;
+      downloadLink.download = 'woniuyoujian_config.json';
+
+      // 触发下载
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+      document.body.removeChild(downloadLink);
+
+      // 释放URL对象
+      URL.revokeObjectURL(downloadUrl);
+
+      showStatusMessage('配置导出成功！', 'success');
+    } catch (error) {
+      console.error('配置导出失败:', error);
+      showStatusMessage('配置导出失败: ' + error.message, 'error');
+    }
+  });
+
+  // 导入配置按钮点击事件
+  importConfigButton.addEventListener('click', () => {
+    fileInput.click();
+  });
+
+  // 文件选择事件
+  fileInput.addEventListener('change', (event) => {
+    if (!event.target.files || event.target.files.length === 0) return;
+
+    const file = event.target.files[0];
+    const reader = new FileReader();
+
+    reader.onload = (e) => {
+      try {
+        // 解析JSON
+        const importedConfig = JSON.parse(e.target.result);
+
+        // 基本验证
+        if (!importedConfig.text_contexts || !importedConfig.page_contexts || 
+            !importedConfig.link_contexts || !importedConfig.image_contexts) {
+          throw new Error('导入的配置格式无效，必须包含所有必要的菜单类型');
+        }
+
+        // 确认是否导入
+        if (confirm('确定要导入此配置吗？这将覆盖您当前的所有菜单配置。')) {
+          // 更新配置
+          config.text_contexts = importedConfig.text_contexts || [];
+          config.page_contexts = importedConfig.page_contexts || [];
+          config.link_contexts = importedConfig.link_contexts || [];
+          config.image_contexts = importedConfig.image_contexts || [];
+
+          // 重新渲染菜单列表
+          renderAllMenuLists();
+
+          // 更新配置预览
+          updateConfigPreview();
+
+          // 保存配置
+          saveConfig().then(() => {
+            showStatusMessage('配置导入成功并已保存！', 'success');
+          }).catch(error => {
+            console.error('保存导入的配置失败:', error);
+            showStatusMessage('配置导入成功，但保存失败: ' + error.message, 'error');
+          });
+        }
+      } catch (error) {
+        console.error('配置导入失败:', error);
+        showStatusMessage('配置导入失败: ' + error.message, 'error');
+      }
+
+      // 清除文件输入，允许选择相同的文件
+      fileInput.value = '';
+    };
+
+    reader.onerror = () => {
+      showStatusMessage('读取文件时发生错误', 'error');
+      fileInput.value = '';
+    };
+
+    reader.readAsText(file);
+  });
+
+  // 初始显示配置
+  updateConfigPreview();
 }

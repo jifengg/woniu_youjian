@@ -253,6 +253,18 @@ h2 {
   color: #e74c3c;
 }
 
+.settings-section {
+  margin-bottom: 25px;
+}
+
+.settings-section h3 {
+  font-size: 16px;
+  margin-bottom: 15px;
+  color: #2c3e50;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 8px;
+}
+
 .settings-info {
   background-color: #f8f9fa;
   padding: 20px;
@@ -272,6 +284,58 @@ h2 {
 
 .info-value {
   color: #555;
+}
+
+.settings-config {
+  background-color: #f8f9fa;
+  padding: 20px;
+  border-radius: 6px;
+  margin-top: 10px;
+}
+
+.config-actions {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.config-button {
+  padding: 8px 16px;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.3s;
+}
+
+.config-button:hover {
+  background-color: #2980b9;
+}
+
+.config-view {
+  margin-top: 20px;
+}
+
+.config-view h4 {
+  font-size: 14px;
+  margin-bottom: 10px;
+  color: #2c3e50;
+}
+
+#config-preview {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 15px;
+  max-height: 300px;
+  overflow-y: auto;
+  font-family: monospace;
+  font-size: 12px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-all;
 }
 
 .no-items {
@@ -417,8 +481,35 @@ h2 {
     background-color: #1f2021;
   }
 
+  .settings-section h3 {
+    color: #e8eaed;
+    border-bottom: 1px solid #444;
+  }
+
   .info-value {
     color: #9aa0a6;
+  }
+
+  .settings-config {
+    background-color: #1f2021;
+  }
+
+  .config-button {
+    background-color: #1a73e8;
+  }
+
+  .config-button:hover {
+    background-color: #1967d2;
+  }
+
+  .config-view h4 {
+    color: #e8eaed;
+  }
+
+  #config-preview {
+    background-color: #292a2d;
+    border-color: #5f6368;
+    color: #e8eaed;
   }
 
   .no-items {

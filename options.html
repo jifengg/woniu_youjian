@@ -83,18 +83,36 @@
 
       <div id="settings" class="tab-pane">
         <h2>设置</h2>
-        <div class="settings-info">
-          <div class="info-item">
-            <div class="info-label">名称:</div>
-            <div class="info-value" id="extension-name"></div>
+        <div class="settings-section">
+          <h3>基本信息</h3>
+          <div class="settings-info">
+            <div class="info-item">
+              <div class="info-label">名称:</div>
+              <div class="info-value" id="extension-name"></div>
+            </div>
+            <div class="info-item">
+              <div class="info-label">版本:</div>
+              <div class="info-value" id="extension-version"></div>
+            </div>
+            <div class="info-item">
+              <div class="info-label">作者:</div>
+              <div class="info-value" id="extension-author"></div>
+            </div>
           </div>
-          <div class="info-item">
-            <div class="info-label">版本:</div>
-            <div class="info-value" id="extension-version"></div>
-          </div>
-          <div class="info-item">
-            <div class="info-label">作者:</div>
-            <div class="info-value" id="extension-author"></div>
+        </div>
+
+        <div class="settings-section">
+          <h3>配置管理</h3>
+          <div class="settings-config">
+            <div class="config-actions">
+              <button id="export-config" class="config-button">导出配置</button>
+              <button id="import-config" class="config-button">导入配置</button>
+              <input type="file" id="config-file-input" accept=".json" style="display:none">
+            </div>
+            <div class="config-view">
+              <h4>当前配置</h4>
+              <pre id="config-preview"></pre>
+            </div>
           </div>
         </div>
       </div>

@@ -75,7 +75,22 @@ document.addEventListener('DOMContentLoaded', async () => {
     const manifest = chrome.runtime.getManifest();
     const versionInfo = document.createElement('div');
     versionInfo.className = 'version-info';
-    versionInfo.textContent = `${manifest.name} v${manifest.version}`;
+
+    // 创建版本文本
+    const versionText = document.createElement('span');
+    versionText.textContent = `${manifest.name} v${manifest.version}`;
+    versionInfo.appendChild(versionText);
+
+    // 创建设置图标按钮
+    const settingsBtn = document.createElement('button');
+    settingsBtn.innerHTML = '⚙️';
+    settingsBtn.title = '打开设置页面';
+    settingsBtn.className = 'settings-icon';
+    settingsBtn.addEventListener('click', () => {
+      chrome.runtime.openOptionsPage();
+    });
+    versionInfo.appendChild(settingsBtn);
+
     document.body.appendChild(versionInfo);
 
   } catch (error) {

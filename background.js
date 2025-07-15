@@ -1,70 +1,10 @@
 
 
 
-// 保存菜单配置的全局变量
-let menuConfig = null;
-
-// 从配置文件加载菜单设置，并为每个菜单项添加类型标识
-async function loadMenuConfig() {
-  // 如果配置已经加载过，直接返回缓存的配置
-  if (menuConfig !== null) {
-    return menuConfig;
-  }
-
-  try {
-    const response = await fetch(chrome.runtime.getURL('config.json'));
-    const config = await response.json();
-
-    // 为每个菜单项添加type标识
-    if (config.text_contexts && config.text_contexts.length > 0) {
-      config.text_contexts.forEach(item => {
-        item.type = 'text';
-      });
-    }
-
-    if (config.page_contexts && config.page_contexts.length > 0) {
-      config.page_contexts.forEach(item => {
-        item.type = 'page';
-      });
-    }
-
-    if (config.link_contexts && config.link_contexts.length > 0) {
-      config.link_contexts.forEach(item => {
-        item.type = 'link';
-      });
-    }
-
-    if (config.image_contexts && config.image_contexts.length > 0) {
-      config.image_contexts.forEach(item => {
-        item.type = 'image';
-      });
-    }
-
-    // 创建所有菜单项的汇总集合，方便后续查找
-    config.all_items = [
-      ...(config.text_contexts || []),
-      ...(config.page_contexts || []),
-      ...(config.link_contexts || []),
-      ...(config.image_contexts || [])
-    ];
-
-    menuConfig = config;
-    return menuConfig;
-  } catch (error) {
-    console.error('加载配置文件失败:', error);
-    menuConfig = {
-      text_contexts: [],
-      page_contexts: [],
-      link_contexts: [],
-      image_contexts: [],
-      all_items: []
-    };
-    return menuConfig;
-  }
-}
-
 // 引入工具函数
 importScripts('js/utils.js');
+
+// 注：loadMenuConfig和processUrl函数现在从utils.js中引入
 
 // processUrl函数现在从utils.js中引入
 

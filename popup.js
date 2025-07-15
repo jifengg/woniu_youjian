@@ -6,9 +6,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     const searchButtonsContainer = document.getElementById('search-buttons');
     const searchInput = document.getElementById('search-input');
 
-    // 从配置文件中加载搜索引擎设置
-    const response = await fetch(chrome.runtime.getURL('config.json'));
-    const config = await response.json();
+    // 从工具函数加载配置
+    const config = await loadMenuConfig();
 
     // 确保有文本搜索选项
     if (config.text_contexts && config.text_contexts.length > 0) {

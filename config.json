@@ -3,37 +3,37 @@
     {
       "enable": true,
       "id": "search-1",
-      "title": "百度搜索",
+      "title": "百度",
       "url": "https://www.baidu.com/s?wd=%s"
     },
     {
       "enable": true,
       "id": "search-2",
-      "title": "Google搜索",
+      "title": "Google",
       "url": "https://www.google.com/search?q=%s"
     },
     {
       "enable": true,
       "id": "search-3",
-      "title": "必应搜索",
+      "title": "必应",
       "url": "https://www.bing.com/search?q=%s"
     },
     {
       "enable": true,
       "id": "search-4",
-      "title": "搜狗搜索",
+      "title": "搜狗",
       "url": "https://www.sogou.com/web?query=%s"
     },
     {
       "enable": true,
       "id": "search-5",
-      "title": "知乎搜索",
+      "title": "知乎",
       "url": "https://www.zhihu.com/search?type=content&q=%s"
     },
     {
       "enable": true,
       "id": "search-6",
-      "title": "Bilibili搜索",
+      "title": "Bilibili",
       "url": "https://search.bilibili.com/all?keyword=%s"
     },
     {

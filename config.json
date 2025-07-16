@@ -85,6 +85,24 @@
       "id": "page-3",
       "title": "翻译页面",
       "url": "https://translate.google.com/translate?sl=auto&tl=zh-CN&u=%s"
+    },
+    {
+      "enable": true,
+      "id": "page-4",
+      "title": "历史记录",
+      "url": "chrome://history"
+    },
+    {
+      "enable": true,
+      "id": "page-5",
+      "title": "chrome://flags",
+      "url": "chrome://flags"
+    },
+    {
+      "enable": true,
+      "id": "page-6",
+      "title": "扩展程序",
+      "url": "chrome://extensions"
     }
   ],
   "link_contexts": [

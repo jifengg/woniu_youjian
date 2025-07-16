@@ -43,3 +43,29 @@
 
 ## 版本信息
 当前版本: 1.0
+
+## 截图
+
+### 划词菜单
+
+![Image](https://github.com/user-attachments/assets/7fadd9cb-18ed-45f4-aff2-0adb94e98b51)
+
+### 链接菜单
+
+![Image](https://github.com/user-attachments/assets/a6299e3e-f420-42f5-a520-60948163dbb6)
+
+### 图片菜单
+
+![Image](https://github.com/user-attachments/assets/615649dd-7640-4a60-8a87-7e23ea02e05b)
+
+### 页面菜单
+
+![Image](https://github.com/user-attachments/assets/d328b793-02d3-4152-9436-0910035abfd8)
+
+### 弹出页面
+
+![Image](https://github.com/user-attachments/assets/90b88653-b4c0-41df-abf2-77791909b9d7)
+
+### 设置页面
+
+![Image](https://github.com/user-attachments/assets/4ff48005-2c2d-4dc5-b28f-acf867c875cc)

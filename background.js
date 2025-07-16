@@ -4,105 +4,13 @@
 // 引入工具函数
 importScripts('js/utils.js');
 
-// 注：loadMenuConfig和processUrl函数现在从utils.js中引入
-
-// processUrl函数现在从utils.js中引入
-
 // 创建上下文菜单项
 chrome.runtime.onInstalled.addListener(async () => {
   // 移除所有现有的上下文菜单项
   chrome.contextMenus.removeAll();
-
   // 加载配置
   const config = await loadMenuConfig();
-
-  // 创建选中文本菜单项
-  if (config.text_contexts && config.text_contexts.length > 0) {
-    config.text_contexts.forEach(item => {
-      // 只有当enable为true或未定义时创建菜单项
-      if (item.enable !== false) {
-        chrome.contextMenus.create({
-          id: item.id,
-          title: item.title,
-          contexts: ["selection"]
-        });
-      }
-    });
-  } else {
-    console.warn('配置文件中没有找到有效的文本选择菜单项');
-  }
-
-  // 创建页面右键菜单项
-  if (config.page_contexts && config.page_contexts.length > 0) {
-    // 创建页面右键菜单分隔符
-    chrome.contextMenus.create({
-      id: "page-separator",
-      type: "separator",
-      contexts: ["page"]
-    });
-
-    // 创建页面右键菜单组
-    config.page_contexts.forEach(item => {
-      // 只有当enable为true或未定义时创建菜单项
-      if (item.enable !== false) {
-        chrome.contextMenus.create({
-          id: item.id,
-          title: item.title,
-          contexts: ["page"]
-        });
-      }
-    });
-  } else {
-    console.warn('配置文件中没有找到有效的页面菜单项');
-  }
-
-  // 创建链接右键菜单项
-  if (config.link_contexts && config.link_contexts.length > 0) {
-    // 创建链接右键菜单分隔符
-    chrome.contextMenus.create({
-      id: "link-separator",
-      type: "separator",
-      contexts: ["link"]
-    });
-
-    // 创建链接右键菜单组
-    config.link_contexts.forEach(item => {
-      // 只有当enable为true或未定义时创建菜单项
-      if (item.enable !== false) {
-        chrome.contextMenus.create({
-          id: item.id,
-          title: item.title,
-          contexts: ["link"]
-        });
-      }
-    });
-  } else {
-    console.warn('配置文件中没有找到有效的链接菜单项');
-  }
-
-  // 创建图片右键菜单项
-  if (config.image_contexts && config.image_contexts.length > 0) {
-    // 创建图片右键菜单分隔符
-    chrome.contextMenus.create({
-      id: "image-separator",
-      type: "separator",
-      contexts: ["image"]
-    });
-
-    // 创建图片右键菜单组
-    config.image_contexts.forEach(item => {
-      // 只有当enable为true或未定义时创建菜单项
-      if (item.enable !== false) {
-        chrome.contextMenus.create({
-          id: item.id,
-          title: item.title,
-          contexts: ["image"]
-        });
-      }
-    });
-  } else {
-    console.warn('配置文件中没有找到有效的图片菜单项');
-  }
+  buildContextMenus(config);
 });
 
 // 处理上下文菜单点击事件
@@ -155,7 +63,6 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
   }
 });
 
-
 // 处理来自选项页面的消息
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   // 检查消息类型
@@ -179,25 +86,17 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
   // 处理重新加载配置请求
   if (message.action === 'reloadConfig') {
-    // 清除缓存的配置，强制重新加载
-    clearMenuConfigCache();
-
     // 重建上下文菜单
     rebuildContextMenus();
-
     sendResponse({ success: true });
     return true;
   }
 });
 
 // 重建所有上下文菜单
-async function rebuildContextMenus() {
+async function buildContextMenus(config) {
   // 移除所有现有的上下文菜单项
   await chrome.contextMenus.removeAll();
-
-  // 加载配置
-  const config = await loadMenuConfig();
-
   // 创建选中文本菜单项
   if (config.text_contexts && config.text_contexts.length > 0) {
     config.text_contexts.forEach(item => {
@@ -233,7 +132,6 @@ async function rebuildContextMenus() {
       }
     });
   }
-
   // 创建链接右键菜单项
   if (config.link_contexts && config.link_contexts.length > 0) {
     // 创建链接右键菜单分隔符
@@ -277,6 +175,14 @@ async function rebuildContextMenus() {
       }
     });
   }
+}
 
+// 重建所有上下文菜单
+async function rebuildContextMenus() {
+  // 清除菜单配置缓存
+  clearMenuConfigCache();
+  // 加载配置
+  const config = await loadMenuConfig();
+  buildContextMenus(config);
   console.log('已重建所有上下文菜单');
 }
